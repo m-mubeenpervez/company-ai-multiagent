@@ -1,0 +1,77 @@
+# ==============================
+# Python
+# ==============================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyc
+
+
+# ==============================
+# Virtual Environment
+# ==============================
+
+.venv/
+venv/
+env/
+
+
+# ==============================
+# Environment / Secrets
+# ==============================
+
+.env
+
+
+# Keep example environment file
+!.env.example
+
+
+# ==============================
+# Google ADK Local Data
+# ==============================
+
+.adk/
+company_system/.adk/
+
+
+# ==============================
+# Qdrant Generated Local Storage
+# ==============================
+
+company_system/qdrant_storage/
+
+
+# ==============================
+# IDE / Editor
+# ==============================
+
+.vscode/
+.idea/
+
+
+# ==============================
+# OS Files
+# ==============================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ==============================
+# Test / Python Cache
+# ==============================
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+
+# ==============================
+# Logs
+# ==============================
+
+*.log
