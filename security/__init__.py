@@ -1,0 +1,1 @@
+"""CompanyAI security assessment package."""

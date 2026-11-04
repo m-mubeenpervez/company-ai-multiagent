@@ -12,5 +12,5 @@ assert any("monthly progress report" in c["text"].lower() for c in chunks)
 print(f"RAG document pipeline smoke test PASS: {len(pages)} pages -> {len(chunks)} chunks")
 print(
     "Live embedding/Qdrant search uses "
-    "LM Studio embeddings and local Qdrant."
+    "Gemini embeddings and local Qdrant."
 )

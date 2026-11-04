@@ -1,0 +1,61 @@
+[
+  {
+    "id": "rag_intern_monthly_deadline",
+    "question": "When must interns submit their monthly progress report?",
+    "reference": "Interns submit the monthly progress report by the last working day of each month. If the final calendar date is a weekend or company holiday, the deadline is the preceding working day.",
+    "required_facts": [
+      "last working day of each month",
+      "weekend or company holiday",
+      "preceding working day"
+    ]
+  },
+  {
+    "id": "rag_remote_work_approval",
+    "question": "What approval is required before an intern works remotely?",
+    "reference": "Remote work is not automatic. Employees and interns require written manager approval unless their role is covered by an approved remote-work arrangement.",
+    "required_facts": [
+      "remote work is not automatic",
+      "written manager approval",
+      "approved remote-work arrangement"
+    ]
+  },
+  {
+    "id": "rag_leave_entitlements",
+    "question": "What annual, sick, and casual leave entitlements do permanent employees receive?",
+    "reference": "Permanent employees receive 20 annual leave days, 10 sick leave days, and 7 casual leave days per leave year unless a signed contract specifies otherwise.",
+    "required_facts": [
+      "20 annual leave days",
+      "10 sick leave days",
+      "7 casual leave days"
+    ]
+  },
+  {
+    "id": "rag_late_arrival",
+    "question": "At what time is an employee considered late under the handbook?",
+    "reference": "Arrival after 9:15 AM is treated as late unless approved by a manager or covered by an official flexible schedule.",
+    "required_facts": [
+      "after 9:15 AM",
+      "manager approval",
+      "official flexible schedule"
+    ]
+  },
+  {
+    "id": "rag_report_revision",
+    "question": "How long does an intern have to revise a monthly report after changes are requested?",
+    "reference": "If changes are requested, the intern submits the revised report within 1 working day of receiving feedback.",
+    "required_facts": [
+      "within 1 working day",
+      "receiving feedback"
+    ]
+  },
+  {
+    "id": "rag_leave_approval",
+    "question": "When is a leave request considered approved?",
+    "reference": "A leave request is not considered approved until an authorized manager or HR representative approves it. A pending request must not be described as approved.",
+    "required_facts": [
+      "authorized manager or HR representative",
+      "approves it",
+      "pending request"
+    ]
+  }
+]

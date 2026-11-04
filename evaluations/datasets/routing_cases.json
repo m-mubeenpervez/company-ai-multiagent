@@ -1,0 +1,218 @@
+[
+  {
+    "id": "route_01",
+    "input": "Who am I currently signed in as?",
+    "expected_route": "auth_agent",
+    "domain": "auth"
+  },
+  {
+    "id": "route_02",
+    "input": "Please tell me which CompanyAI account is logged in.",
+    "expected_route": "auth_agent",
+    "domain": "auth"
+  },
+  {
+    "id": "route_03",
+    "input": "Create a new CompanyAI login for employee 12.",
+    "expected_route": "hr_agent",
+    "domain": "hr"
+  },
+  {
+    "id": "route_04",
+    "input": "Deactivate employee number 8 in the company records.",
+    "expected_route": "hr_agent",
+    "domain": "hr"
+  },
+  {
+    "id": "route_05",
+    "input": "What department and designation does employee 3 have?",
+    "expected_route": "employee_agent",
+    "domain": "employee"
+  },
+  {
+    "id": "route_06",
+    "input": "Look up the work location for Ali Hassan.",
+    "expected_route": "employee_agent",
+    "domain": "employee"
+  },
+  {
+    "id": "route_07",
+    "input": "Has my monthly internship report been submitted?",
+    "expected_route": "intern_agent",
+    "domain": "intern"
+  },
+  {
+    "id": "route_08",
+    "input": "Show the progress status of intern 6 for this month.",
+    "expected_route": "intern_agent",
+    "domain": "intern"
+  },
+  {
+    "id": "route_09",
+    "input": "Show employee 3's check-in and check-out history.",
+    "expected_route": "attendance_agent",
+    "domain": "attendance"
+  },
+  {
+    "id": "route_10",
+    "input": "Was I marked late on any working days this month?",
+    "expected_route": "attendance_agent",
+    "domain": "attendance"
+  },
+  {
+    "id": "route_11",
+    "input": "How many annual leave days do I have remaining?",
+    "expected_route": "leave_agent",
+    "domain": "leave"
+  },
+  {
+    "id": "route_12",
+    "input": "Submit a leave request for my upcoming days off.",
+    "expected_route": "leave_agent",
+    "domain": "leave"
+  },
+  {
+    "id": "route_13",
+    "input": "According to the handbook, when is the monthly intern report due?",
+    "expected_route": "policy_agent",
+    "domain": "policy"
+  },
+  {
+    "id": "route_14",
+    "input": "What written approval is needed before working remotely?",
+    "expected_route": "policy_agent",
+    "domain": "policy"
+  },
+  {
+    "id": "route_15",
+    "input": "List candidates currently waiting for interviews.",
+    "expected_route": "recruitment_agent",
+    "domain": "recruitment"
+  },
+  {
+    "id": "route_16",
+    "input": "Show the latest interview outcome for candidate records.",
+    "expected_route": "recruitment_agent",
+    "domain": "recruitment"
+  },
+  {
+    "id": "route_17",
+    "input": "Show my latest performance review.",
+    "expected_route": "performance_agent",
+    "domain": "performance"
+  },
+  {
+    "id": "route_18",
+    "input": "What feedback is recorded for my performance?",
+    "expected_route": "performance_agent",
+    "domain": "performance"
+  },
+  {
+    "id": "route_19",
+    "input": "Which training courses have been assigned to me?",
+    "expected_route": "training_agent",
+    "domain": "training"
+  },
+  {
+    "id": "route_20",
+    "input": "Show my mandatory learning progress.",
+    "expected_route": "training_agent",
+    "domain": "training"
+  },
+  {
+    "id": "route_21",
+    "input": "What tasks have been assigned to me?",
+    "expected_route": "project_agent",
+    "domain": "project"
+  },
+  {
+    "id": "route_22",
+    "input": "Show the projects I am a member of.",
+    "expected_route": "project_agent",
+    "domain": "project"
+  },
+  {
+    "id": "route_23",
+    "input": "Show my September payslip.",
+    "expected_route": "payroll_agent",
+    "domain": "payroll"
+  },
+  {
+    "id": "route_24",
+    "input": "How much was I paid in the previous payroll month?",
+    "expected_route": "payroll_agent",
+    "domain": "payroll"
+  },
+  {
+    "id": "route_25",
+    "input": "Show my submitted reimbursement claims.",
+    "expected_route": "finance_agent",
+    "domain": "finance"
+  },
+  {
+    "id": "route_26",
+    "input": "I need to submit a new expense claim.",
+    "expected_route": "finance_agent",
+    "domain": "finance"
+  },
+  {
+    "id": "route_27",
+    "input": "Which company laptop is assigned to me?",
+    "expected_route": "it_agent",
+    "domain": "it"
+  },
+  {
+    "id": "route_28",
+    "input": "Show the assets currently assigned to employee 5.",
+    "expected_route": "it_agent",
+    "domain": "it"
+  },
+  {
+    "id": "route_29",
+    "input": "List the company documents I am allowed to view.",
+    "expected_route": "document_agent",
+    "domain": "document"
+  },
+  {
+    "id": "route_30",
+    "input": "Show my available employee document records.",
+    "expected_route": "document_agent",
+    "domain": "document"
+  },
+  {
+    "id": "route_31",
+    "input": "How many active employees are there in each department?",
+    "expected_route": "analytics_agent",
+    "domain": "analytics"
+  },
+  {
+    "id": "route_32",
+    "input": "Give me the company-wide operational summary.",
+    "expected_route": "analytics_agent",
+    "domain": "analytics"
+  },
+  {
+    "id": "route_33",
+    "input": "Show my latest notifications.",
+    "expected_route": "notification_agent",
+    "domain": "notification"
+  },
+  {
+    "id": "route_34",
+    "input": "Do I have any unread company alerts?",
+    "expected_route": "notification_agent",
+    "domain": "notification"
+  },
+  {
+    "id": "route_35",
+    "input": "Show the most recent audit log entries.",
+    "expected_route": "audit_agent",
+    "domain": "audit"
+  },
+  {
+    "id": "route_36",
+    "input": "Review the latest recorded administrative actions.",
+    "expected_route": "audit_agent",
+    "domain": "audit"
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "agent_auth_identity",
+    "input": "Who am I signed in as?",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "auth_agent",
+    "expected_tools": [
+      "get_login_identity"
+    ],
+    "expected_output": "The current authenticated account identity and role.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_hr_employee_list",
+    "input": "Show the current company employee list.",
+    "username": "hr.admin",
+    "role": "hr",
+    "expected_route": "hr_agent",
+    "expected_tools": [
+      "list_employees"
+    ],
+    "expected_output": "A concise list or summary of employee records returned to an authorized HR user.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_policy_deadline",
+    "input": "What is the monthly internship report deadline according to the handbook?",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "policy_agent",
+    "expected_tools": [
+      "search_company_policy"
+    ],
+    "expected_output": "Interns submit the monthly progress report by the last working day of each month. If the final calendar date is a weekend or company holiday, the deadline is the preceding working day.",
+    "evaluation_scope": "rag"
+  },
+  {
+    "id": "agent_employee_own_profile",
+    "input": "Show my employee profile.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "employee_agent",
+    "expected_tools": [
+      "get_employee_profile"
+    ],
+    "expected_output": "The authenticated user's own employee profile, with fields confirmed by the employee profile tool.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_intern_report",
+    "input": "Show my monthly internship report status.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "intern_agent",
+    "expected_tools": [
+      "get_intern_report_status"
+    ],
+    "expected_output": "A concise summary of the authenticated intern's monthly report status based on structured records.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_attendance_own",
+    "input": "Show my attendance records for this month.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "attendance_agent",
+    "expected_tools": [
+      "get_attendance"
+    ],
+    "expected_output": "A concise summary of the authenticated user's attendance records returned by the attendance system.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_leave_balance",
+    "input": "How many leave days do I have remaining?",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "leave_agent",
+    "expected_tools": [
+      "get_leave_balance"
+    ],
+    "expected_output": "The authenticated user's leave balance returned by the structured leave system.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_recruitment_candidates",
+    "input": "List candidates in the recruitment pipeline.",
+    "username": "recruiter.noor",
+    "role": "recruiter",
+    "expected_route": "recruitment_agent",
+    "expected_tools": [
+      "list_candidates"
+    ],
+    "expected_output": "A concise list or summary of candidate pipeline records accessible to the recruiter.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_performance_own",
+    "input": "Show my latest performance review.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "performance_agent",
+    "expected_tools": [
+      "get_performance_reviews"
+    ],
+    "expected_output": "A concise summary of the authenticated user's performance review records.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_training_assignments",
+    "input": "Which training courses are assigned to me?",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "training_agent",
+    "expected_tools": [
+      "get_training_assignments"
+    ],
+    "expected_output": "A concise summary of the authenticated intern's training assignments, based only on returned records.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_project_tasks",
+    "input": "Show my assigned tasks.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "project_agent",
+    "expected_tools": [
+      "get_employee_tasks"
+    ],
+    "expected_output": "A concise summary of the currently assigned tasks for the authenticated intern, using only returned task records.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_payroll_own",
+    "input": "Show my latest payslip.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "payroll_agent",
+    "expected_tools": [
+      "get_payroll"
+    ],
+    "expected_output": "The authenticated user's own payroll record, with amounts taken only from the payroll tool response.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_finance_expenses",
+    "input": "Show the expense claims I am responsible for reviewing.",
+    "username": "finance.hina",
+    "role": "finance",
+    "expected_route": "finance_agent",
+    "expected_tools": [
+      "get_expense_claims"
+    ],
+    "expected_output": "A concise summary of expense claims visible to the authorized Finance user.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_it_assets",
+    "input": "Show the company assets assigned to me.",
+    "username": "it.usman",
+    "role": "it",
+    "expected_route": "it_agent",
+    "expected_tools": [
+      "get_assigned_assets"
+    ],
+    "expected_output": "A concise summary of asset assignments returned by the IT asset system.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_document_list",
+    "input": "List the company documents I am allowed to access.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "document_agent",
+    "expected_tools": [
+      "list_documents"
+    ],
+    "expected_output": "A concise list of documents visible to the authenticated intern under document access rules.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_analytics_people",
+    "input": "Give me the company people summary.",
+    "username": "hr.admin",
+    "role": "hr",
+    "expected_route": "analytics_agent",
+    "expected_tools": [
+      "company_people_summary"
+    ],
+    "expected_output": "A concise company people summary based on authorized analytics records.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_notifications",
+    "input": "Show my latest notifications.",
+    "username": "intern.mubeen",
+    "role": "intern",
+    "expected_route": "notification_agent",
+    "expected_tools": [
+      "get_my_notifications"
+    ],
+    "expected_output": "A concise summary of notifications belonging to the authenticated user.",
+    "evaluation_scope": "agent"
+  },
+  {
+    "id": "agent_audit_logs",
+    "input": "Show the latest audit log entries.",
+    "username": "admin.auditor",
+    "role": "admin",
+    "expected_route": "audit_agent",
+    "expected_tools": [
+      "get_recent_audit_logs"
+    ],
+    "expected_output": "A concise summary of recent audit entries accessible to an authorized administrator.",
+    "evaluation_scope": "agent"
+  }
+]
