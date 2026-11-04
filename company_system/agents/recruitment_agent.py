@@ -1,17 +1,19 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
+from company_system.config import build_agent_generation_config, build_llm
 
-from company_system.tools.recruitment_tools import (
-    list_candidates,
-    get_interview_status,
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
+
 
 
 recruitment_agent = Agent(
     name="recruitment_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Recruitment specialist. Handles candidate pipeline "
@@ -78,6 +80,9 @@ list_candidates() requires:
 
 If the stage is missing, ask for the stage.
 Do not invent or assume a stage.
+
+Exception: "the recruitment pipeline", "all candidates", or equivalent
+explicitly means every stage. Call list_candidates(stage="") for that request.
 
 
 get_interview_status() requires:
@@ -225,9 +230,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        list_candidates,
-        get_interview_status,
-    ],
+    tools=[build_mcp_toolset("recruitment")],
+    before_tool_callback=inject_mcp_session_token,
 )

@@ -1,13 +1,18 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.payroll_tools import get_payroll
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
+)
 
 
 payroll_agent = Agent(
     name="payroll_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Payroll and compensation specialist. Handles sensitive "
@@ -94,6 +99,10 @@ ask the user for the payroll month.
 
 Do not assume the current month.
 Do not guess a month.
+
+Exception: when the user explicitly asks for the "latest" or "most recent"
+payslip, call get_payroll(pay_month=""). The tool selects the latest available
+record deterministically; do not substitute the current month.
 
 
 ==================================================
@@ -272,8 +281,6 @@ Base Salary: PKR 50,000.00
 Do not infer currency from user location, company location,
 previous messages, or model knowledge.
 """,
-
-    tools=[
-        get_payroll,
-    ],
+    tools=[build_mcp_toolset("payroll")],
+    before_tool_callback=inject_mcp_session_token,
 )

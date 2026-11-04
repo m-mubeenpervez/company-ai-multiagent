@@ -4,7 +4,7 @@ from company_system.database.db import get_connection
 from company_system.security.authz import require_roles
 
 def list_candidates(stage: str, tool_context: ToolContext) -> dict:
-    """List candidates by stage. Recruiter or HR only."""
+    """List candidates by stage, or all pipeline candidates when stage is empty. Recruiter or HR only."""
     user, error = require_roles(tool_context, {"recruiter","hr"})
     if error: return error
     conn = get_connection()

@@ -1,0 +1,2 @@
+# Patched environment installer; independent of ADK/LiteLLM runtime constraints.
+pip==26.3

@@ -1,14 +1,18 @@
 from __future__ import annotations
 
+import os
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent / "company.db"
+_DEFAULT_DB_PATH = Path(__file__).resolve().parent / "company.db"
+DB_PATH = Path(os.getenv("COMPANYAI_DB_PATH", str(_DEFAULT_DB_PATH))).expanduser().resolve()
 
 def get_connection() -> sqlite3.Connection:
-    conn = sqlite3.connect(DB_PATH)
+    # Normal runtime must never silently replace missing company data.
+    conn = sqlite3.connect(DB_PATH.as_uri() + "?mode=rw", uri=True)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    conn.execute("PRAGMA busy_timeout = 5000")
     return conn
 
 def row_to_dict(row):

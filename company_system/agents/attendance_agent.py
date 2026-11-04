@@ -1,17 +1,19 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
+from company_system.config import build_agent_generation_config, build_llm
 
-from company_system.tools.attendance_tools import (
-    get_attendance,
-    attendance_summary,
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
+
 
 
 attendance_agent = Agent(
     name="attendance_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Attendance and work-time specialist. "
@@ -119,13 +121,16 @@ Response:
 
 Do not assume:
 
-- current month
 - current week
 - today
 - previous month
 
 unless the user explicitly requested that period and the required
 dates are already known to the system.
+
+When the user explicitly says "this month", derive the first and last
+calendar dates from Current local date in the host session context and call
+get_attendance(). This is deterministic date resolution, not invented data.
 
 
 ==================================================
@@ -272,9 +277,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        get_attendance,
-        attendance_summary,
-    ],
+    tools=[build_mcp_toolset("attendance")],
+    before_tool_callback=inject_mcp_session_token,
 )

@@ -1,9 +1,10 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.analytics_tools import (
-    company_people_summary,
-    company_operational_summary,
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
 
 
@@ -11,6 +12,7 @@ analytics_agent = Agent(
     name="analytics_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Analytics and management reporting specialist. "
@@ -253,9 +255,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        company_people_summary,
-        company_operational_summary,
-    ],
+    tools=[build_mcp_toolset("analytics")],
+    before_tool_callback=inject_mcp_session_token,
 )

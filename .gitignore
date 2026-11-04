@@ -23,6 +23,7 @@ env/
 # ==============================
 
 .env
+.env.*
 
 
 # Keep example environment file
@@ -75,3 +76,35 @@ htmlcov/
 # ==============================
 
 *.log
+
+# ==============================
+# Local databases and test data
+# ==============================
+
+company_system/database/company.db
+*.db
+*.sqlite
+*.sqlite3
+
+# ==============================
+# Evaluation runtime / environments
+# ==============================
+
+.venv-eval/
+.evaluation_runtime/
+# Keep evaluation/security reports and datasets reviewable.
+.release_backups/
+.release_backup_location
+.deepeval/
+*.pem
+*.key
+*.db-wal
+*.db-shm
+!.env.example
+# Historical retrieval fixtures are reviewable evidence, not active company data.
+!evaluations/provenance/**/*.db
+!evaluations/provenance/**/*.sqlite
+!evaluations/provenance/**/*.sqlite3
+.release_candidate/
+.venv-release/
+.venv-release-eval/
