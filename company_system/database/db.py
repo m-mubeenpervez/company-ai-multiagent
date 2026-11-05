@@ -4,8 +4,16 @@ import os
 import sqlite3
 from pathlib import Path
 
-_DEFAULT_DB_PATH = Path(__file__).resolve().parent / "company.db"
-DB_PATH = Path(os.getenv("COMPANYAI_DB_PATH", str(_DEFAULT_DB_PATH))).expanduser().resolve()
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+_DEFAULT_DB_PATH = PROJECT_ROOT / ".companyai_runtime" / "company.db"
+
+
+def resolve_data_path(value: str | Path) -> Path:
+    path = Path(value).expanduser()
+    return (path if path.is_absolute() else PROJECT_ROOT / path).resolve()
+
+
+DB_PATH = resolve_data_path(os.getenv("COMPANYAI_DB_PATH", str(_DEFAULT_DB_PATH)))
 
 def get_connection() -> sqlite3.Connection:
     # Normal runtime must never silently replace missing company data.

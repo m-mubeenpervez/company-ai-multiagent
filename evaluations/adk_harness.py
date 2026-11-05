@@ -180,7 +180,7 @@ def _load_user_state(username: str) -> dict:
     }
 
 
-async def run_companyai_case(prompt: str, username: str = "intern.mubeen") -> dict:
+async def run_companyai_case(prompt: str, username: str = "demo.intern") -> dict:
     """Run a real CompanyAI root-agent turn using an isolated evaluation session."""
     from company_system.security.quota import check_quota
     check_quota()

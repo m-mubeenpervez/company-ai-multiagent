@@ -78,16 +78,16 @@ def main():
             SELECT COUNT(*) c
             FROM users
             WHERE username IN (
-                'hr.admin',
-                'manager.asim',
-                'employee.ali',
-                'employee.sara',
-                'intern.mubeen',
-                'intern.ahmad',
-                'recruiter.noor',
-                'finance.hina',
-                'it.usman',
-                'admin.auditor'
+                'demo.hr',
+                'demo.manager',
+                'demo.employee',
+                'demo.employee2',
+                'demo.intern',
+                'demo.intern2',
+                'demo.recruiter',
+                'demo.finance',
+                'demo.it',
+                'demo.admin'
             )
             """
         ).fetchone()["c"]

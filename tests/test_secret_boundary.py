@@ -207,7 +207,7 @@ class SecretBoundaryTests(unittest.TestCase):
             finally:
                 await toolset.close()
         self.assertEqual(asyncio.run(hr_surface()), {"list_employees", "create_employee", "update_employee_status"})
-        self.login("hr.admin", "HrAdmin#2026")
+        self.login("demo.hr", "DemoHr#2026")
         new = "DummyRotation-Secure-23!"
         with patch.object(self.app.state.runner, "run_async") as run:
             try:

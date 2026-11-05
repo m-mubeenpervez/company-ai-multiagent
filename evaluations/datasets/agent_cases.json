@@ -2,7 +2,7 @@
   {
     "id": "agent_auth_identity",
     "input": "Who am I signed in as?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "auth_agent",
     "expected_tools": [
@@ -14,7 +14,7 @@
   {
     "id": "agent_hr_employee_list",
     "input": "Show the current company employee list.",
-    "username": "hr.admin",
+    "username": "demo.hr",
     "role": "hr",
     "expected_route": "hr_agent",
     "expected_tools": [
@@ -26,7 +26,7 @@
   {
     "id": "agent_policy_deadline",
     "input": "What is the monthly internship report deadline according to the handbook?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "policy_agent",
     "expected_tools": [
@@ -38,7 +38,7 @@
   {
     "id": "agent_employee_own_profile",
     "input": "Show my employee profile.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "employee_agent",
     "expected_tools": [
@@ -50,7 +50,7 @@
   {
     "id": "agent_intern_report",
     "input": "Show my monthly internship report status.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "intern_agent",
     "expected_tools": [
@@ -62,7 +62,7 @@
   {
     "id": "agent_attendance_own",
     "input": "Show my attendance records for this month.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "attendance_agent",
     "expected_tools": [
@@ -74,7 +74,7 @@
   {
     "id": "agent_leave_balance",
     "input": "How many leave days do I have remaining?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "leave_agent",
     "expected_tools": [
@@ -86,7 +86,7 @@
   {
     "id": "agent_recruitment_candidates",
     "input": "List candidates in the recruitment pipeline.",
-    "username": "recruiter.noor",
+    "username": "demo.recruiter",
     "role": "recruiter",
     "expected_route": "recruitment_agent",
     "expected_tools": [
@@ -98,7 +98,7 @@
   {
     "id": "agent_performance_own",
     "input": "Show my latest performance review.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "performance_agent",
     "expected_tools": [
@@ -110,7 +110,7 @@
   {
     "id": "agent_training_assignments",
     "input": "Which training courses are assigned to me?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "training_agent",
     "expected_tools": [
@@ -122,7 +122,7 @@
   {
     "id": "agent_project_tasks",
     "input": "Show my assigned tasks.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "project_agent",
     "expected_tools": [
@@ -134,7 +134,7 @@
   {
     "id": "agent_payroll_own",
     "input": "Show my latest payslip.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "payroll_agent",
     "expected_tools": [
@@ -146,7 +146,7 @@
   {
     "id": "agent_finance_expenses",
     "input": "Show the expense claims I am responsible for reviewing.",
-    "username": "finance.hina",
+    "username": "demo.finance",
     "role": "finance",
     "expected_route": "finance_agent",
     "expected_tools": [
@@ -158,7 +158,7 @@
   {
     "id": "agent_it_assets",
     "input": "Show the company assets assigned to me.",
-    "username": "it.usman",
+    "username": "demo.it",
     "role": "it",
     "expected_route": "it_agent",
     "expected_tools": [
@@ -170,7 +170,7 @@
   {
     "id": "agent_document_list",
     "input": "List the company documents I am allowed to access.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "document_agent",
     "expected_tools": [
@@ -182,7 +182,7 @@
   {
     "id": "agent_analytics_people",
     "input": "Give me the company people summary.",
-    "username": "hr.admin",
+    "username": "demo.hr",
     "role": "hr",
     "expected_route": "analytics_agent",
     "expected_tools": [
@@ -194,7 +194,7 @@
   {
     "id": "agent_notifications",
     "input": "Show my latest notifications.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "notification_agent",
     "expected_tools": [
@@ -206,7 +206,7 @@
   {
     "id": "agent_audit_logs",
     "input": "Show the latest audit log entries.",
-    "username": "admin.auditor",
+    "username": "demo.admin",
     "role": "admin",
     "expected_route": "audit_agent",
     "expected_tools": [

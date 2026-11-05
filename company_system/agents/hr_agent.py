@@ -98,10 +98,10 @@ UPDATE LOGIN CREDENTIALS
 
 Examples:
 
-"Change employee.ali password."
+"Change demo.employee password."
 -> Use the secure credential administration form.
 
-"Change user employee.ali role to employee."
+"Change user demo.employee role to employee."
 -> Use the secure credential administration form.
 
 
@@ -110,7 +110,7 @@ DELETE LOGIN CREDENTIALS
 
 Examples:
 
-"Delete credentials for employee.ali."
+"Delete credentials for demo.employee."
 -> Use the secure credential administration form.
 
 

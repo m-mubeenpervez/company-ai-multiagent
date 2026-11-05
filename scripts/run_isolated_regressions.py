@@ -9,10 +9,6 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_DB = ROOT / "company_system" / "database" / "company.db"
-SOURCE_QDRANT = ROOT / "company_system" / "qdrant_storage"
-
-
 def prepare_runtime() -> dict[str, Path]:
     sys.path.insert(0, str(ROOT))
     from evaluations.runtime_isolation import prepare_isolated_runtime

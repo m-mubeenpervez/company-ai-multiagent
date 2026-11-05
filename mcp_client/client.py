@@ -50,8 +50,8 @@ async def main() -> None:
         login_result = await client.call_tool(
             "login",
             {
-                "username": "intern.mubeen",
-                "password": "Intern#2026",
+                "username": "demo.intern",
+                "password": "DemoIntern#2026",
             },
         )
         login_data = _structured(login_result)

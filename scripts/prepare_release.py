@@ -8,12 +8,21 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PROTECTED = Path(r"D:\company_ai_multiagent_gemini_llm_mcp_final")
-FINAL = Path(r"D:\CompanyAI")
+
+
+def configured_path(variable: str, default: str) -> Path:
+    """Resolve configured paths relative to the project without guessing targets."""
+    value = Path(os.getenv(variable, default)).expanduser()
+    return (value if value.is_absolute() else ROOT / value).resolve()
+
+
+PROTECTED = configured_path("COMPANYAI_PROTECTED_ORIGINAL", ".protected_original")
+FINAL = configured_path("COMPANYAI_FINAL_DESTINATION", ".release_output/CompanyAI")
 EXCLUDED = {".release_backups", ".release_backup_location", ".release_candidate", ".evaluation_runtime",
             ".deepeval", "__pycache__", ".pytest_cache", ".mypy_cache", ".adk", "venv", "env"}
 
@@ -21,7 +30,7 @@ EXCLUDED = {".release_backups", ".release_backup_location", ".release_candidate"
 def copy_candidate(destination: Path, *, allow_blocked: bool = False):
     destination = destination.resolve()
     if destination not in {ROOT / ".release_candidate/CompanyAI", FINAL}:
-        raise ValueError("Destination must be the isolated working-copy candidate or D:\\CompanyAI.")
+        raise ValueError(f"Destination must be the isolated candidate or configured final destination: {FINAL}")
     if destination == PROTECTED or destination.is_relative_to(PROTECTED):
         raise ValueError("Protected original cannot be a release destination.")
     if destination.exists():

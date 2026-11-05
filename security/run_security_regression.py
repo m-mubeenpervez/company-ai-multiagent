@@ -31,7 +31,7 @@ class FakeToolContext:
         self.state = {}
 
 
-def _user_state(username: str = "intern.mubeen") -> dict:
+def _user_state(username: str = "demo.intern") -> dict:
     conn = get_connection()
     try:
         row = conn.execute(
@@ -93,7 +93,7 @@ def main() -> int:
     results.append(_check(
         "Valid MCP token reconstructs authenticated identity",
         context is not None and error is None
-        and context.state.get("auth_username") == "intern.mubeen",
+        and context.state.get("auth_username") == "demo.intern",
     ))
 
     # A changed role invalidates the existing token immediately.

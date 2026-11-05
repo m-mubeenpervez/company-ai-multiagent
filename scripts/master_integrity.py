@@ -34,6 +34,11 @@ GENERATED_ROOTS = {".evaluation_runtime", ".release_backups", ".release_candidat
                    ".venv", ".venv-eval", "__pycache__", ".pytest_cache", ".mypy_cache"}
 
 
+def configured_path(variable: str, default: str) -> Path:
+    value = Path(os.getenv(variable, default)).expanduser()
+    return (value if value.is_absolute() else ROOT / value).resolve()
+
+
 def validate_initial_integrity_metadata(metadata: object) -> None:
     """Validate the approved v1 metadata contract before consuming paths."""
     if not isinstance(metadata, dict):
@@ -168,7 +173,8 @@ def load_validated_backup(metadata: dict, root: Path = ROOT) -> tuple[Path, Path
 
 
 def main():
-    assert ROOT.name in {"company_ai_multiagent_gemini_llm_mcp_eval_security_final", "companyai-secure-multi-agent-platform"}
+    if not (ROOT / "company_system").is_dir() or not (ROOT / "evaluations").is_dir():
+        raise RuntimeError("Integrity checks must run from a CompanyAI project root.")
     output = ROOT / "evaluations/results"
     initial = json.loads((output / "current_initial_integrity.json").read_text(encoding="utf-8"))
     backup, backup_project, manifest = load_validated_backup(initial, ROOT)
@@ -178,7 +184,7 @@ def main():
     rollback_errors = [name for name, row in manifest.items()
                        if not (backup_project / name).is_file()
                        or digest(backup_project / name) != row["sha256"]]
-    original = Path(r"D:\company_ai_multiagent_gemini_llm_mcp_final")
+    original = configured_path("COMPANYAI_PROTECTED_ORIGINAL", ".protected_original")
     original_manifest = json.loads((ROOT / ".release_backups/20261103_213826/original_manifest.json")
                                    .read_text(encoding="utf-8"))
     validate_manifest(original_manifest, original, label="protected-original")
@@ -285,7 +291,8 @@ def main():
               "integrity_errors": integrity_errors,
               "configured_api_key_matches_in_owned_text_artifacts": matches,
               "git_status_exit": git.returncode, "git_status": git.stdout + git.stderr,
-              "final_directory_exists": Path(r"D:\CompanyAI").exists(), "final_copy_authorized": False,
+              "final_directory_exists": configured_path("COMPANYAI_FINAL_DESTINATION", ".release_output/CompanyAI").exists(),
+              "final_copy_authorized": False,
               "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in sources}}
     bad = (rollback_errors or original_errors or asset_errors or stage_errors or stage_qdrant_errors or live_errors
            or missing_evidence or integrity_errors or matches

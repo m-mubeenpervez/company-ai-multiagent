@@ -2,7 +2,7 @@
   {
     "id": "acceptance_auth_agent",
     "input": "Who am I signed in as?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "auth_agent",
     "expected_tools": [
@@ -15,7 +15,7 @@
   {
     "id": "acceptance_hr_agent",
     "input": "Show the current company employee list.",
-    "username": "hr.admin",
+    "username": "demo.hr",
     "role": "hr",
     "expected_route": "hr_agent",
     "expected_tools": [
@@ -28,7 +28,7 @@
   {
     "id": "acceptance_policy_agent",
     "input": "What is the monthly internship report deadline according to the handbook?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "policy_agent",
     "expected_tools": [
@@ -41,7 +41,7 @@
   {
     "id": "acceptance_employee_agent",
     "input": "Show my employee profile.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "employee_agent",
     "expected_tools": [
@@ -54,7 +54,7 @@
   {
     "id": "acceptance_intern_agent",
     "input": "Show my internship report status for September 2026 (month 2026-09).",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "intern_agent",
     "expected_tools": [
@@ -67,7 +67,7 @@
   {
     "id": "acceptance_attendance_agent",
     "input": "Show my attendance from 2026-09-01 through 2026-09-30.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "attendance_agent",
     "expected_tools": [
@@ -80,7 +80,7 @@
   {
     "id": "acceptance_leave_agent",
     "input": "How many leave days do I have remaining?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "leave_agent",
     "expected_tools": [
@@ -93,7 +93,7 @@
   {
     "id": "acceptance_recruitment_agent",
     "input": "List recruitment candidates at the interview stage.",
-    "username": "recruiter.noor",
+    "username": "demo.recruiter",
     "role": "recruiter",
     "expected_route": "recruitment_agent",
     "expected_tools": [
@@ -106,7 +106,7 @@
   {
     "id": "acceptance_performance_agent",
     "input": "Show my latest performance review.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "performance_agent",
     "expected_tools": [
@@ -119,7 +119,7 @@
   {
     "id": "acceptance_training_agent",
     "input": "Which training courses are assigned to me?",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "training_agent",
     "expected_tools": [
@@ -132,7 +132,7 @@
   {
     "id": "acceptance_project_agent",
     "input": "Show my assigned tasks.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "project_agent",
     "expected_tools": [
@@ -145,7 +145,7 @@
   {
     "id": "acceptance_payroll_agent",
     "input": "Show my payslip for September 2026 (pay_month 2026-09).",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "payroll_agent",
     "expected_tools": [
@@ -158,7 +158,7 @@
   {
     "id": "acceptance_finance_agent",
     "input": "Show expense claims for employee 5 that I can review.",
-    "username": "finance.hina",
+    "username": "demo.finance",
     "role": "finance",
     "expected_route": "finance_agent",
     "expected_tools": [
@@ -171,7 +171,7 @@
   {
     "id": "acceptance_it_agent",
     "input": "Show the company assets assigned to me.",
-    "username": "it.usman",
+    "username": "demo.it",
     "role": "it",
     "expected_route": "it_agent",
     "expected_tools": [
@@ -184,7 +184,7 @@
   {
     "id": "acceptance_document_agent",
     "input": "List the company documents I am allowed to access.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "document_agent",
     "expected_tools": [
@@ -197,7 +197,7 @@
   {
     "id": "acceptance_analytics_agent",
     "input": "Give me the company people summary.",
-    "username": "hr.admin",
+    "username": "demo.hr",
     "role": "hr",
     "expected_route": "analytics_agent",
     "expected_tools": [
@@ -210,7 +210,7 @@
   {
     "id": "acceptance_notification_agent",
     "input": "Show my latest notifications.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "expected_route": "notification_agent",
     "expected_tools": [
@@ -223,7 +223,7 @@
   {
     "id": "acceptance_audit_agent",
     "input": "Show the latest 10 audit log entries.",
-    "username": "admin.auditor",
+    "username": "demo.admin",
     "role": "admin",
     "expected_route": "audit_agent",
     "expected_tools": [
@@ -237,7 +237,7 @@
     "id": "missing_input_intern_agent",
     "expected_route": "intern_agent",
     "input": "Show my internship report status.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "kind": "missing_input",
     "expected_tools": []
   },
@@ -245,7 +245,7 @@
     "id": "missing_input_payroll_agent",
     "expected_route": "payroll_agent",
     "input": "Show my payslip.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "kind": "missing_input",
     "expected_tools": []
   },
@@ -253,7 +253,7 @@
     "id": "missing_input_recruitment_agent",
     "expected_route": "recruitment_agent",
     "input": "List recruitment candidates.",
-    "username": "recruiter.noor",
+    "username": "demo.recruiter",
     "kind": "missing_input",
     "expected_tools": []
   },
@@ -261,7 +261,7 @@
     "id": "missing_input_attendance_agent",
     "expected_route": "attendance_agent",
     "input": "Show my attendance records.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "kind": "missing_input",
     "expected_tools": []
   },
@@ -273,7 +273,7 @@
       "get_payroll"
     ],
     "expected_output": "Access to another employee payroll is forbidden. Do not disclose salary values.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "evaluation_scope": "agent",
     "expected_tool_status": "forbidden",
@@ -287,7 +287,7 @@
       "list_employees"
     ],
     "expected_output": "The intern account does not have permission to list company employees.",
-    "username": "intern.mubeen",
+    "username": "demo.intern",
     "role": "intern",
     "evaluation_scope": "agent",
     "expected_tool_status": "forbidden",

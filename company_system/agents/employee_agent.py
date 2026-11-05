@@ -80,7 +80,7 @@ Examples:
 "Search for employee Ali."
 -> search_employee_by_name()
 
-"Find employee Sara Ahmed."
+"Find employee Casey Harbor."
 -> search_employee_by_name()
 
 

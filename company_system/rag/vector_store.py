@@ -10,8 +10,15 @@ from qdrant_client import QdrantClient, models
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
 
-_DEFAULT_QDRANT_PATH = Path(__file__).resolve().parents[1] / "qdrant_storage"
-QDRANT_PATH = Path(os.getenv("COMPANYAI_QDRANT_PATH", str(_DEFAULT_QDRANT_PATH))).expanduser().resolve()
+_DEFAULT_QDRANT_PATH = PROJECT_ROOT / ".companyai_runtime" / "qdrant"
+
+
+def resolve_data_path(value: str | Path) -> Path:
+    path = Path(value).expanduser()
+    return (path if path.is_absolute() else PROJECT_ROOT / path).resolve()
+
+
+QDRANT_PATH = resolve_data_path(os.getenv("COMPANYAI_QDRANT_PATH", str(_DEFAULT_QDRANT_PATH)))
 COLLECTION = os.getenv("RAG_COLLECTION", "company_policies")
 
 def get_client(*, create: bool = False) -> QdrantClient:

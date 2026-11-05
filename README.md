@@ -52,18 +52,21 @@ if (-not (Test-Path -LiteralPath .env)) { Copy-Item -LiteralPath .env.example -D
 powershell -ExecutionPolicy Bypass -File .\setup_windows.ps1
 ```
 
-Setup creates `.venv`, installs the bounded dependencies with tested version
-constraints, checks pip/Gemini, requires existing approved SQLite and Qdrant data, and runs
-isolated regressions. Setup does not initialize or ingest company data. Never overwrite a
-configured `.env`. `.env.example` contains placeholders only.
+Setup creates `.venv`, installs the bounded dependencies, resolves
+`COMPANYAI_DB_PATH` and `COMPANYAI_QDRANT_PATH`, creates an ignored synthetic local
+database when the configured path is absent, verifies Gemini, ingests the handbook when
+the configured collection is absent, and then runs isolated regressions. Existing
+configured data is preserved; resets remain explicit operations. Never overwrite a
+configured `.env`. `.env.example` contains placeholders and project-relative ignored
+runtime paths.
 
-The repository currently preserves its historical tracked demo SQLite database, while
-the newer schema includes revocable MCP sessions. Before first use, back up that file and
-run `python initialize_database.py` only after confirming the data is demo-safe; this
-applies additive schema creation and seed logic. Build the ignored local vector index with
-`python ingest_documents.py`. For non-demo data, point `COMPANYAI_DB_PATH` and
-`COMPANYAI_QDRANT_PATH` at separately protected runtime locations instead of committing
-their contents.
+The repository still preserves its historical tracked SQLite database for history only;
+normal runtime and setup do not use or alter it. The proposed replacement fixture uses
+fictional `example.invalid` identities and salted PBKDF2 password hashes. It must be
+independently verified before any separate commit replaces the historical binary. See
+[the synthetic database proposal](docs/SYNTHETIC_DATABASE_PROPOSAL.md). For non-demo
+data, set `COMPANYAI_DB_PATH` and `COMPANYAI_QDRANT_PATH` to separately protected
+locations before running setup.
 
 Configuration uses `GEMINI_LLM_MODEL`, `GEMINI_ROUTER_MODEL`,
 `GEMINI_ROUTER_FALLBACK_MODEL`, `GEMINI_ROUTER_MIN_CONFIDENCE`,

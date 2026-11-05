@@ -90,9 +90,9 @@ async def verify(transport, output_path=None):
             await call("ping_companyai")
             await call("get_employee_profile", {"employee_id": 5}, expected="auth_required")
             tokens = {}
-            for role, username, password in [("hr", "hr.admin", "HrAdmin#2026"), ("intern", "intern.mubeen", "Intern#2026"),
-                                              ("finance", "finance.hina", "Finance#2026"), ("it", "it.usman", "ItSupport#2026"),
-                                              ("recruiter", "recruiter.noor", "Recruit#2026")]:
+            for role, username, password in [("hr", "demo.hr", "DemoHr#2026"), ("intern", "demo.intern", "DemoIntern#2026"),
+                                              ("finance", "demo.finance", "DemoFinance#2026"), ("it", "demo.it", "DemoSupport#2026"),
+                                              ("recruiter", "demo.recruiter", "DemoRecruit#2026")]:
                 tokens[role] = (await call("login", {"username": username, "password": password}))["session_token"]
             hr, intern = tokens["hr"], tokens["intern"]
             reads = [

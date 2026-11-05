@@ -147,7 +147,7 @@ async def _run(args) -> int:
             row = {"id": case["id"], "question": case["question"],
                    "reference": case["reference"], "status": "error", **dict.fromkeys(METRIC_NAMES)}
             try:
-                run = await run_companyai_case(case["question"], username="intern.mubeen")
+                run = await run_companyai_case(case["question"], username="demo.intern")
                 contexts = run["retrieval_context"]
                 answer = run["actual_output"]
                 row.update(

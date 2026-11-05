@@ -81,6 +81,7 @@ htmlcov/
 # Local databases and test data
 # ==============================
 
+.companyai_runtime/
 company_system/database/company.db
 *.db
 *.sqlite

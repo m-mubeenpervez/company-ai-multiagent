@@ -38,7 +38,7 @@ class ReleaseSafetyTests(unittest.TestCase):
         self.assertEqual(ingest_pdf(ROOT / "nonexistent.pdf")["status"], "preserved")
 
     def test_invalid_expense_and_leave_inputs_do_not_write(self):
-        context = identity("intern.mubeen", "Intern#2026")
+        context = identity("demo.intern", "DemoIntern#2026")
         for amount in [-1, 0, float("nan"), float("inf")]:
             self.assertEqual(finance_tools.submit_expense("Travel", amount, "test", context)["status"], "error")
         for start, end, days in [("bad", "bad", 1), ("2026-11-05", "2026-11-01", 1),
@@ -46,13 +46,13 @@ class ReleaseSafetyTests(unittest.TestCase):
             self.assertEqual(leave_tools.request_leave("annual", start, end, days, "test", context)["status"], "error")
 
     def test_manager_cannot_approve_own_leave(self):
-        context = identity("manager.asim", "Manager#2026")
+        context = identity("demo.manager", "DemoManager#2026")
         row = leave_tools.request_leave("annual", "2026-11-05", "2026-11-05", 1, "test", context)
         self.assertEqual(leave_tools.approve_leave(row["request_id"], "approved", context)["status"], "forbidden")
 
     def test_leave_approval_updates_balance_once_and_rejection_restores_it(self):
-        intern = identity("intern.mubeen", "Intern#2026")
-        hr = identity("hr.admin", "HrAdmin#2026")
+        intern = identity("demo.intern", "DemoIntern#2026")
+        hr = identity("demo.hr", "DemoHr#2026")
         before = leave_tools.get_leave_balance(5, intern)["balance"]["annual_remaining"]
         row = leave_tools.request_leave("annual", "2026-11-10", "2026-11-10", 1, "Isolated test", intern)
         for _ in range(2):
@@ -63,19 +63,19 @@ class ReleaseSafetyTests(unittest.TestCase):
         self.assertEqual(leave_tools.request_leave("annual", "2026-11-01", "2026-11-30", 30, "test", intern)["status"], "error")
 
     def test_password_rotation_and_credential_removal_invalidate_sessions(self):
-        hr = identity("hr.admin", "HrAdmin#2026")
-        target = identity("employee.sara", "Employee#2026")
+        hr = identity("demo.hr", "DemoHr#2026")
+        target = identity("demo.employee2", "DemoEmployee#2026")
         old = create_mcp_session(target.state)
-        self.assertEqual(hr_tools.update_user_credentials("employee.sara", "Rotated#2026", "", hr)["status"], "success")
+        self.assertEqual(hr_tools.update_user_credentials("demo.employee2", "Rotated#2026", "", hr)["status"], "success")
         self.assertEqual(context_from_session_token(old)[1]["status"], "auth_required")
-        target = identity("employee.sara", "Rotated#2026")
+        target = identity("demo.employee2", "Rotated#2026")
         token = create_mcp_session(target.state)
-        self.assertEqual(hr_tools.delete_user_credentials("employee.sara", hr)["status"], "success")
-        self.assertEqual(hr_tools.create_user_credentials(4, "employee.sara", "Replacement#2026", "employee", hr)["status"], "success")
+        self.assertEqual(hr_tools.delete_user_credentials("demo.employee2", hr)["status"], "success")
+        self.assertEqual(hr_tools.create_user_credentials(4, "demo.employee2", "Replacement#2026", "employee", hr)["status"], "success")
         # Recreating credentials must never resurrect the pre-removal bearer token.
         self.assertEqual(context_from_session_token(token)[1]["status"], "auth_required")
-        self.assertEqual(auth_tools.login("employee.sara", "Rotated#2026", SessionToolContext({}))["status"], "error")
-        self.assertEqual(auth_tools.login("employee.sara", "Replacement#2026", SessionToolContext({}))["status"], "success")
+        self.assertEqual(auth_tools.login("demo.employee2", "Rotated#2026", SessionToolContext({}))["status"], "error")
+        self.assertEqual(auth_tools.login("demo.employee2", "Replacement#2026", SessionToolContext({}))["status"], "success")
         conn = get_connection()
         try:
             self.assertEqual(conn.execute("PRAGMA foreign_key_check").fetchall(), [])

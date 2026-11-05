@@ -63,7 +63,7 @@ async def main() -> None:
             "auth_required",
         ))
 
-        intern_token = await login(client, "intern.mubeen", "Intern#2026")
+        intern_token = await login(client, "demo.intern", "DemoIntern#2026")
 
         results.append(check(
             "Intern can view own employee profile",
@@ -107,7 +107,7 @@ async def main() -> None:
             "auth_required",
         ))
 
-        manager_token = await login(client, "manager.asim", "Manager#2026")
+        manager_token = await login(client, "demo.manager", "DemoManager#2026")
         results.append(check(
             "Manager can view direct report profile",
             await call(client, "get_employee_profile", {
@@ -117,7 +117,7 @@ async def main() -> None:
             "success",
         ))
 
-        finance_token = await login(client, "finance.hina", "Finance#2026")
+        finance_token = await login(client, "demo.finance", "DemoFinance#2026")
         results.append(check(
             "Finance can view employee payroll",
             await call(client, "get_payroll", {
@@ -128,7 +128,7 @@ async def main() -> None:
             "success",
         ))
 
-        hr_token = await login(client, "hr.admin", "HrAdmin#2026")
+        hr_token = await login(client, "demo.hr", "DemoHr#2026")
         results.append(check(
             "HR can list employees through MCP",
             await call(client, "list_employees", {
@@ -137,7 +137,7 @@ async def main() -> None:
             "success",
         ))
 
-        employee_token = await login(client, "employee.ali", "Employee#2026")
+        employee_token = await login(client, "demo.employee", "DemoEmployee#2026")
         results.append(check(
             "Employee cannot access company analytics",
             await call(client, "company_people_summary", {

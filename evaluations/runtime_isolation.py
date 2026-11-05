@@ -7,11 +7,23 @@ import tempfile
 import sqlite3
 from contextlib import closing
 from pathlib import Path
+from dotenv import load_dotenv
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_DB = PROJECT_ROOT / "company_system" / "database" / "company.db"
-DEFAULT_QDRANT = PROJECT_ROOT / "company_system" / "qdrant_storage"
+load_dotenv(PROJECT_ROOT / ".env")
+
+
+def configured_sources() -> tuple[Path, Path]:
+    """Resolve runtime sources before importing modules that cache data paths."""
+    def resolve(variable: str, default: str) -> Path:
+        value = Path(os.getenv(variable, default)).expanduser()
+        return (value if value.is_absolute() else PROJECT_ROOT / value).resolve()
+
+    return (
+        resolve("COMPANYAI_DB_PATH", ".companyai_runtime/company.db"),
+        resolve("COMPANYAI_QDRANT_PATH", ".companyai_runtime/qdrant"),
+    )
 
 
 def prepare_isolated_runtime(
@@ -32,21 +44,22 @@ def prepare_isolated_runtime(
     runtime_base.mkdir(exist_ok=True)
     runtime_root = Path(tempfile.mkdtemp(prefix=name + "_", dir=runtime_base))
 
-    if not DEFAULT_DB.exists():
+    source_db, source_qdrant = configured_sources()
+    if not source_db.exists():
         raise FileNotFoundError(
-            f"CompanyAI database not found: {DEFAULT_DB}. "
+            f"CompanyAI database not found: {source_db}. "
             "Run the normal project setup first."
         )
 
     db_copy = runtime_root / "company.db"
     # SQLite's backup API includes committed WAL data in a consistent snapshot.
-    with closing(sqlite3.connect(f"{DEFAULT_DB.as_uri()}?mode=ro", uri=True)) as source:
+    with closing(sqlite3.connect(f"{source_db.as_uri()}?mode=ro", uri=True)) as source:
         with closing(sqlite3.connect(db_copy)) as destination:
             source.backup(destination)
 
     qdrant_copy = runtime_root / "qdrant_storage"
-    if copy_qdrant and DEFAULT_QDRANT.exists():
-        shutil.copytree(DEFAULT_QDRANT, qdrant_copy)
+    if copy_qdrant and source_qdrant.exists():
+        shutil.copytree(source_qdrant, qdrant_copy)
     else:
         qdrant_copy.mkdir(parents=True, exist_ok=True)
 

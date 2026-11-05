@@ -72,7 +72,23 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # ---------------------------------------------------------
-# Gemini API
+# Local runtime data
+# ---------------------------------------------------------
+
+Write-Host ""
+Write-Host "Resolving configured local data paths..."
+& $VenvPython -c "from company_system.database.db import DB_PATH; from company_system.rag.vector_store import QDRANT_PATH; print('SQLite:', DB_PATH); print('Qdrant:', QDRANT_PATH)"
+if ($LASTEXITCODE -ne 0) { throw "Configured data paths could not be resolved." }
+
+Write-Host "Initializing the configured SQLite path if it is absent..."
+& $VenvPython initialize_database.py --synthetic
+if ($LASTEXITCODE -ne 0) { throw "Synthetic SQLite initialization failed." }
+
+& $VenvPython -c "from company_system.database.db import get_connection; c=get_connection(); assert c.execute('PRAGMA integrity_check').fetchone()[0] == 'ok'; assert not c.execute('PRAGMA foreign_key_check').fetchall(); assert c.execute(\"SELECT name FROM sqlite_master WHERE type='table' AND name='mcp_sessions'\").fetchone(); c.close()"
+if ($LASTEXITCODE -ne 0) { throw "Configured SQLite verification failed." }
+
+# ---------------------------------------------------------
+# Gemini API and handbook ingestion
 # ---------------------------------------------------------
 
 Write-Host ""
@@ -82,19 +98,13 @@ if ($LASTEXITCODE -ne 0) {
     throw "Gemini API verification failed. Check GEMINI_API_KEY and quota/access."
 }
 
-# ---------------------------------------------------------
-# SQLite Database
-# ---------------------------------------------------------
+Write-Host "Creating the configured handbook index if it is absent..."
+& $VenvPython ingest_documents.py
+if ($LASTEXITCODE -ne 0) { throw "Handbook ingestion failed." }
 
-$DatabasePath = Join-Path $PSScriptRoot "company_system\database\company.db"
-
-if (-not (Test-Path $DatabasePath)) {
-    throw "Existing company database is required. Restore approved data; setup will not create/reset it."
-}
-
-Write-Host "Verifying existing Qdrant collection without ingestion..."
+Write-Host "Verifying the configured Qdrant collection..."
 & $VenvPython -c "from company_system.rag.vector_store import get_client, COLLECTION, QDRANT_PATH; assert QDRANT_PATH.is_dir(), 'Existing Qdrant directory required'; c=get_client(); exists=c.collection_exists(COLLECTION); c.close(); assert exists, 'Existing policy collection required; setup does not ingest data.'"
-if ($LASTEXITCODE -ne 0) { throw "Existing policy data is required; restore approved Qdrant data separately." }
+if ($LASTEXITCODE -ne 0) { throw "Configured policy index verification failed." }
 
 # ---------------------------------------------------------
 # Full Regression Suite

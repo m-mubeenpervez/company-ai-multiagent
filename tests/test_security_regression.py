@@ -30,12 +30,12 @@ class FakeToolContext:
 
 
 USERS = {
-    "employee_ali": FakeToolContext(user_id=3, username="employee.ali", role="employee", employee_id=3, full_name="Ali Hassan"),
-    "intern_mubeen": FakeToolContext(user_id=5, username="intern.mubeen", role="intern", employee_id=5, full_name="Mubeen Pervez"),
-    "manager_asim": FakeToolContext(user_id=2, username="manager.asim", role="manager", employee_id=2, full_name="Asim Raza"),
-    "finance_hina": FakeToolContext(user_id=8, username="finance.hina", role="finance", employee_id=8, full_name="Hina Malik"),
-    "hr_admin": FakeToolContext(user_id=1, username="hr.admin", role="hr", employee_id=1, full_name="Saqib Khan"),
-    "it_usman": FakeToolContext(user_id=9, username="it.usman", role="it", employee_id=9, full_name="Usman Tariq"),
+    "employee_ali": FakeToolContext(user_id=3, username="demo.employee", role="employee", employee_id=3, full_name="Jules Ember"),
+    "intern_mubeen": FakeToolContext(user_id=5, username="demo.intern", role="intern", employee_id=5, full_name="Riley Quartz"),
+    "manager_asim": FakeToolContext(user_id=2, username="demo.manager", role="manager", employee_id=2, full_name="Arden Vale"),
+    "finance_hina": FakeToolContext(user_id=8, username="demo.finance", role="finance", employee_id=8, full_name="Jordan Maple"),
+    "hr_admin": FakeToolContext(user_id=1, username="demo.hr", role="hr", employee_id=1, full_name="Rowan Cedar"),
+    "it_usman": FakeToolContext(user_id=9, username="demo.it", role="it", employee_id=9, full_name="Quinn Solace"),
 }
 
 
