@@ -1,13 +1,18 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.training_tools import get_training_assignments
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
+)
 
 
 training_agent = Agent(
     name="training_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Learning and training specialist. Handles permission-aware "
@@ -224,8 +229,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        get_training_assignments,
-    ],
+    tools=[build_mcp_toolset("training")],
+    before_tool_callback=inject_mcp_session_token,
 )

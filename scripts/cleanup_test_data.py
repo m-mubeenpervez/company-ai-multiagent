@@ -10,10 +10,15 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
-from company_system.database.db import get_connection
+from company_system.database.db import get_connection, DB_PATH
 
 
 def cleanup():
+    # This historical fixture helper deletes rows/sessions by fixture IDs.
+    # Never allow it to operate on the active company database.
+    runtime_root = (PROJECT_ROOT / ".evaluation_runtime").resolve()
+    if not DB_PATH.resolve().is_relative_to(runtime_root):
+        raise RuntimeError("Cleanup is restricted to an isolated database under .evaluation_runtime.")
     conn = get_connection()
 
     try:
@@ -120,6 +125,9 @@ def cleanup():
 
         print(f"Related audit logs removed: {cur.rowcount}")
 
+
+        conn.execute("DELETE FROM mcp_sessions")
+        print("MCP sessions removed")
 
         conn.commit()
 

@@ -299,3 +299,20 @@ CREATE TABLE audit_logs (
     details TEXT,
     created_at TEXT NOT NULL
 );
+
+
+-- Revocable local MCP authentication sessions.
+CREATE TABLE mcp_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    token_hash TEXT UNIQUE NOT NULL,
+    user_id INTEGER NOT NULL,
+    username TEXT NOT NULL,
+    role TEXT NOT NULL,
+    employee_id INTEGER,
+    full_name TEXT,
+    created_at TEXT NOT NULL,
+    expires_at TEXT NOT NULL,
+    revoked_at TEXT,
+    FOREIGN KEY(user_id) REFERENCES users(id),
+    FOREIGN KEY(employee_id) REFERENCES employees(id)
+);

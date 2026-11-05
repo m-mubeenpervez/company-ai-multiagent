@@ -1,18 +1,19 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
+from company_system.config import build_agent_generation_config, build_llm
 
-from company_system.tools.leave_tools import (
-    get_leave_balance,
-    request_leave,
-    approve_leave,
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
+
 
 
 leave_agent = Agent(
     name="leave_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Leave management specialist. Handles leave balances, "
@@ -232,10 +233,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        get_leave_balance,
-        request_leave,
-        approve_leave,
-    ],
+    tools=[build_mcp_toolset("leave")],
+    before_tool_callback=inject_mcp_session_token,
 )

@@ -1,0 +1,296 @@
+[
+  {
+    "id": "acceptance_auth_agent",
+    "input": "Who am I signed in as?",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "auth_agent",
+    "expected_tools": [
+      "get_login_identity"
+    ],
+    "expected_output": "The current authenticated account identity and role.",
+    "original_golden_id": "agent_auth_identity",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_hr_agent",
+    "input": "Show the current company employee list.",
+    "username": "demo.hr",
+    "role": "hr",
+    "expected_route": "hr_agent",
+    "expected_tools": [
+      "list_employees"
+    ],
+    "expected_output": "A concise list or summary of employee records returned to an authorized HR user.",
+    "original_golden_id": "agent_hr_employee_list",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_policy_agent",
+    "input": "What is the monthly internship report deadline according to the handbook?",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "policy_agent",
+    "expected_tools": [
+      "search_company_policy"
+    ],
+    "expected_output": "Interns submit the monthly progress report by the last working day of each month. If the final calendar date is a weekend or company holiday, the deadline is the preceding working day.",
+    "original_golden_id": "agent_policy_deadline",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_employee_agent",
+    "input": "Show my employee profile.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "employee_agent",
+    "expected_tools": [
+      "get_employee_profile"
+    ],
+    "expected_output": "The authenticated user's own employee profile, with fields confirmed by the employee profile tool.",
+    "original_golden_id": "agent_employee_own_profile",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_intern_agent",
+    "input": "Show my internship report status for September 2026 (month 2026-09).",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "intern_agent",
+    "expected_tools": [
+      "get_intern_report_status"
+    ],
+    "expected_output": "A concise summary of the authenticated intern's monthly report status based on structured records.",
+    "original_golden_id": "agent_intern_report",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_attendance_agent",
+    "input": "Show my attendance from 2026-09-01 through 2026-09-30.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "attendance_agent",
+    "expected_tools": [
+      "get_attendance"
+    ],
+    "expected_output": "A concise summary of the authenticated user's attendance records returned by the attendance system.",
+    "original_golden_id": "agent_attendance_own",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_leave_agent",
+    "input": "How many leave days do I have remaining?",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "leave_agent",
+    "expected_tools": [
+      "get_leave_balance"
+    ],
+    "expected_output": "The authenticated user's leave balance returned by the structured leave system.",
+    "original_golden_id": "agent_leave_balance",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_recruitment_agent",
+    "input": "List recruitment candidates at the interview stage.",
+    "username": "demo.recruiter",
+    "role": "recruiter",
+    "expected_route": "recruitment_agent",
+    "expected_tools": [
+      "list_candidates"
+    ],
+    "expected_output": "A concise list or summary of candidate pipeline records accessible to the recruiter.",
+    "original_golden_id": "agent_recruitment_candidates",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_performance_agent",
+    "input": "Show my latest performance review.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "performance_agent",
+    "expected_tools": [
+      "get_performance_reviews"
+    ],
+    "expected_output": "A concise summary of the authenticated user's performance review records.",
+    "original_golden_id": "agent_performance_own",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_training_agent",
+    "input": "Which training courses are assigned to me?",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "training_agent",
+    "expected_tools": [
+      "get_training_assignments"
+    ],
+    "expected_output": "A concise summary of the authenticated intern's training assignments, based only on returned records.",
+    "original_golden_id": "agent_training_assignments",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_project_agent",
+    "input": "Show my assigned tasks.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "project_agent",
+    "expected_tools": [
+      "get_employee_tasks"
+    ],
+    "expected_output": "A concise summary of the currently assigned tasks for the authenticated intern, using only returned task records.",
+    "original_golden_id": "agent_project_tasks",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_payroll_agent",
+    "input": "Show my payslip for September 2026 (pay_month 2026-09).",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "payroll_agent",
+    "expected_tools": [
+      "get_payroll"
+    ],
+    "expected_output": "The authenticated user's own payroll record, with amounts taken only from the payroll tool response.",
+    "original_golden_id": "agent_payroll_own",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_finance_agent",
+    "input": "Show expense claims for employee 5 that I can review.",
+    "username": "demo.finance",
+    "role": "finance",
+    "expected_route": "finance_agent",
+    "expected_tools": [
+      "get_expense_claims"
+    ],
+    "expected_output": "A concise summary of expense claims visible to the authorized Finance user.",
+    "original_golden_id": "agent_finance_expenses",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_it_agent",
+    "input": "Show the company assets assigned to me.",
+    "username": "demo.it",
+    "role": "it",
+    "expected_route": "it_agent",
+    "expected_tools": [
+      "get_assigned_assets"
+    ],
+    "expected_output": "A concise summary of asset assignments returned by the IT asset system.",
+    "original_golden_id": "agent_it_assets",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_document_agent",
+    "input": "List the company documents I am allowed to access.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "document_agent",
+    "expected_tools": [
+      "list_documents"
+    ],
+    "expected_output": "A concise list of documents visible to the authenticated intern under document access rules.",
+    "original_golden_id": "agent_document_list",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_analytics_agent",
+    "input": "Give me the company people summary.",
+    "username": "demo.hr",
+    "role": "hr",
+    "expected_route": "analytics_agent",
+    "expected_tools": [
+      "company_people_summary"
+    ],
+    "expected_output": "A concise company people summary based on authorized analytics records.",
+    "original_golden_id": "agent_analytics_people",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_notification_agent",
+    "input": "Show my latest notifications.",
+    "username": "demo.intern",
+    "role": "intern",
+    "expected_route": "notification_agent",
+    "expected_tools": [
+      "get_my_notifications"
+    ],
+    "expected_output": "A concise summary of notifications belonging to the authenticated user.",
+    "original_golden_id": "agent_notifications",
+    "kind": "workflow"
+  },
+  {
+    "id": "acceptance_audit_agent",
+    "input": "Show the latest 10 audit log entries.",
+    "username": "demo.admin",
+    "role": "admin",
+    "expected_route": "audit_agent",
+    "expected_tools": [
+      "get_recent_audit_logs"
+    ],
+    "expected_output": "A concise summary of recent audit entries accessible to an authorized administrator.",
+    "original_golden_id": "agent_audit_logs",
+    "kind": "workflow"
+  },
+  {
+    "id": "missing_input_intern_agent",
+    "expected_route": "intern_agent",
+    "input": "Show my internship report status.",
+    "username": "demo.intern",
+    "kind": "missing_input",
+    "expected_tools": []
+  },
+  {
+    "id": "missing_input_payroll_agent",
+    "expected_route": "payroll_agent",
+    "input": "Show my payslip.",
+    "username": "demo.intern",
+    "kind": "missing_input",
+    "expected_tools": []
+  },
+  {
+    "id": "missing_input_recruitment_agent",
+    "expected_route": "recruitment_agent",
+    "input": "List recruitment candidates.",
+    "username": "demo.recruiter",
+    "kind": "missing_input",
+    "expected_tools": []
+  },
+  {
+    "id": "missing_input_attendance_agent",
+    "expected_route": "attendance_agent",
+    "input": "Show my attendance records.",
+    "username": "demo.intern",
+    "kind": "missing_input",
+    "expected_tools": []
+  },
+  {
+    "id": "denied_other_payroll",
+    "input": "Show employee 3 payroll for September 2026.",
+    "expected_route": "payroll_agent",
+    "expected_tools": [
+      "get_payroll"
+    ],
+    "expected_output": "Access to another employee payroll is forbidden. Do not disclose salary values.",
+    "username": "demo.intern",
+    "role": "intern",
+    "evaluation_scope": "agent",
+    "expected_tool_status": "forbidden",
+    "kind": "denial"
+  },
+  {
+    "id": "denied_employee_list",
+    "input": "Show the full company employee list.",
+    "expected_route": "hr_agent",
+    "expected_tools": [
+      "list_employees"
+    ],
+    "expected_output": "The intern account does not have permission to list company employees.",
+    "username": "demo.intern",
+    "role": "intern",
+    "evaluation_scope": "agent",
+    "expected_tool_status": "forbidden",
+    "kind": "denial"
+  }
+]

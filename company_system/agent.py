@@ -1,6 +1,4 @@
-from company_system.routing.deterministic_router_agent import (
-    DeterministicRouterAgent,
-)
+from company_system.routing.semantic_router_agent import GeminiSemanticRouterAgent
 
 from company_system.agents.auth_agent import auth_agent
 from company_system.agents.hr_agent import hr_agent
@@ -21,99 +19,37 @@ from company_system.agents.analytics_agent import analytics_agent
 from company_system.agents.notification_agent import notification_agent
 from company_system.agents.audit_agent import audit_agent
 
-from company_system.agents.common import SPECIALIST_RESPONSE_RULES
+from company_system.agents.common import SPECIALIST_RESPONSE_RULES, with_session_context
+from company_system.security.secret_boundary import guard_model_request
 
-
-# =========================================================
-# COMPANY SPECIALIST AGENTS
-# =========================================================
 
 SPECIALIST_AGENTS = [
-    hr_agent,
-    employee_agent,
-    intern_agent,
-    attendance_agent,
-    leave_agent,
-    policy_agent,
-    recruitment_agent,
-    performance_agent,
-    training_agent,
-    project_agent,
-    payroll_agent,
-    finance_agent,
-    it_agent,
-    document_agent,
-    analytics_agent,
-    notification_agent,
-    audit_agent,
+    hr_agent, employee_agent, intern_agent, attendance_agent, leave_agent,
+    policy_agent, recruitment_agent, performance_agent, training_agent,
+    project_agent, payroll_agent, finance_agent, it_agent, document_agent,
+    analytics_agent, notification_agent, audit_agent,
 ]
 
-
-# =========================================================
-# SPECIALIST CONFIGURATION
-# =========================================================
-
 for specialist in SPECIALIST_AGENTS:
-    # Specialists cannot directly jump to sibling specialists.
     specialist.disallow_transfer_to_peers = True
-
-    # A specialist may return to the root router if necessary.
     specialist.disallow_transfer_to_parent = False
-
-    # Keep the common grounding/security/response rules
-    # that were already being applied to every specialist.
     current_instruction = specialist.instruction or ""
-
     if SPECIALIST_RESPONSE_RULES not in current_instruction:
         specialist.instruction = (
             f"{current_instruction.strip()}\n\n"
             f"{SPECIALIST_RESPONSE_RULES.strip()}"
         )
 
+for specialist in [auth_agent, *SPECIALIST_AGENTS]:
+    specialist.instruction = with_session_context(specialist.instruction or "")
+    specialist.before_model_callback = guard_model_request
 
-# =========================================================
-# AUTH AGENT CONFIGURATION
-# =========================================================
-
-# Authentication is still handled by the existing auth_agent.
-#
-# Important difference:
-# auth_agent no longer decides when it should receive a request.
-# The Python deterministic router sends ONLY login/logout requests
-# to auth_agent.
-#
-# Therefore:
-#
-# Login request
-#     -> deterministic router
-#     -> auth_agent
-#
-# Employee request
-#     -> deterministic router
-#     -> employee_agent
-#
-# Intern request
-#     -> deterministic router
-#     -> intern_agent
-#
-# etc.
-
-
-# =========================================================
-# DETERMINISTIC ROOT ROUTER
-# =========================================================
-
-root_agent = DeterministicRouterAgent(
+root_agent = GeminiSemanticRouterAgent(
     name="company_ai_supervisor",
-
     description=(
-        "Deterministic CompanyAI root router. "
-        "Uses Python routing rules to send each request "
-        "to the correct specialist agent."
+        "Gemini semantic CompanyAI supervisor. Uses an LLM classifier with a "
+        "strict route schema, confidence checking, retry, and Gemini fallback "
+        "to route natural-language requests to the correct specialist."
     ),
-
-    sub_agents=[
-        auth_agent,
-        *SPECIALIST_AGENTS,
-    ],
+    sub_agents=[auth_agent, *SPECIALIST_AGENTS],
 )

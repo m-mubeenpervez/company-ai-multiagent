@@ -1,9 +1,10 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.employee_tools import (
-    get_employee_profile,
-    search_employee_by_name,
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
 
 
@@ -11,6 +12,7 @@ employee_agent = Agent(
     name="employee_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Employee records specialist. Handles employee profiles "
@@ -78,7 +80,7 @@ Examples:
 "Search for employee Ali."
 -> search_employee_by_name()
 
-"Find employee Sara Ahmed."
+"Find employee Casey Harbor."
 -> search_employee_by_name()
 
 
@@ -170,9 +172,6 @@ You may reformat confirmed values for readability.
 
 Do not add generic closing filler.
 """,
-
-    tools=[
-        get_employee_profile,
-        search_employee_by_name,
-    ],
+    tools=[build_mcp_toolset("employee")],
+    before_tool_callback=inject_mcp_session_token,
 )

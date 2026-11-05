@@ -1,13 +1,18 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.document_tools import list_documents
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
+)
 
 
 document_agent = Agent(
     name="document_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Document management specialist. Handles permission-aware "
@@ -213,6 +218,10 @@ If the user's CURRENT request belongs to another CompanyAI domain:
 
 Keep responses concise and structured.
 
+For a request to list accessible documents, return document titles only unless
+the user asks for metadata. Do not add type, visibility, or creation date to a
+simple list request.
+
 Use only values returned by the CURRENT document tool.
 
 You may reformat confirmed metadata for readability.
@@ -223,8 +232,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        list_documents,
-    ],
+    tools=[build_mcp_toolset("document")],
+    before_tool_callback=inject_mcp_session_token,
 )

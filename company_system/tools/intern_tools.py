@@ -118,11 +118,10 @@ def get_intern_report_status(
         return error
 
     report_month = report_month.strip()
-
-    validation_error = _validate_report_month(report_month)
-
-    if validation_error:
-        return validation_error
+    if report_month:
+        validation_error = _validate_report_month(report_month)
+        if validation_error:
+            return validation_error
 
     if not can_view_employee(user, employee_id):
         return {
@@ -136,18 +135,16 @@ def get_intern_report_status(
     conn = get_connection()
 
     try:
-        row = conn.execute(
-            """
-            SELECT *
-            FROM intern_monthly_reports
-            WHERE intern_employee_id = ?
-              AND report_month = ?
-            """,
-            (
-                employee_id,
-                report_month,
-            ),
-        ).fetchone()
+        if report_month:
+            row = conn.execute(
+                "SELECT * FROM intern_monthly_reports WHERE intern_employee_id = ? AND report_month = ?",
+                (employee_id, report_month),
+            ).fetchone()
+        else:
+            row = conn.execute(
+                "SELECT * FROM intern_monthly_reports WHERE intern_employee_id = ? ORDER BY report_month DESC LIMIT 1",
+                (employee_id,),
+            ).fetchone()
 
     finally:
         conn.close()
@@ -157,7 +154,7 @@ def get_intern_report_status(
             "status": "not_found",
             "message": (
                 f"No internship report record was found "
-                f"for {report_month}."
+                + (f"for {report_month}." if report_month else "for this intern.")
             ),
         }
 
@@ -191,11 +188,10 @@ def list_missing_intern_reports(
         return error
 
     report_month = report_month.strip()
-
-    validation_error = _validate_report_month(report_month)
-
-    if validation_error:
-        return validation_error
+    if report_month:
+        validation_error = _validate_report_month(report_month)
+        if validation_error:
+            return validation_error
 
     conn = get_connection()
 

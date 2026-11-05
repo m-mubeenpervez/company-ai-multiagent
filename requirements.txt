@@ -1,6 +1,11 @@
 google-adk>=2.11,<3
-litellm>=1.65.5
+google-genai>=1.0
 qdrant-client>=1.15,<2
 pypdf>=6,<7
 python-dotenv>=1,<2
-requests>=2.32,<3
+mcp[cli]>=2,<3
+pydantic>=2,<3
+
+# Authenticated local UI (already included in the tested ADK dependency set).
+fastapi>=0.162,<1
+uvicorn>=0.54,<1

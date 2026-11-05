@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CompanyAI local</title>
+<h1>CompanyAI</h1>
+<p>Local workstation application. Enter credentials only in these forms, never in chat.</p>
+<form id="login"><label>Username <input name="username" autocomplete="username" required></label>
+<label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+<button>Sign in</button></form>
+<p id="status" role="status"></p><button id="logout">Sign out</button>
+<form id="chat"><label>Company request <textarea name="message" required maxlength="8000"></textarea></label><button>Send</button></form>
+<pre id="answer"></pre>
+<details><summary>HR credential administration</summary>
+<form id="credentials">
+<label>Operation <select name="operation"><option>create</option><option>update</option><option>delete</option></select></label>
+<label>Username <input name="username" required autocomplete="off"></label>
+<label>New password <input name="password" type="password" autocomplete="new-password"></label>
+<label>Role <input name="role"></label><label>Employee ID <input name="employee_id" type="number"></label>
+<button>Apply credential operation</button></form></details>
+<script src="/app.js" defer></script></html>

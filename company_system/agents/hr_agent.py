@@ -1,21 +1,19 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
+from company_system.config import build_agent_generation_config, build_llm
 
-from company_system.tools.hr_tools import (
-    list_employees,
-    create_employee,
-    update_employee_status,
-    create_user_credentials,
-    update_user_credentials,
-    delete_user_credentials,
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
+
 
 
 hr_agent = Agent(
     name="hr_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "HR and People specialist. Handles employee lifecycle, "
@@ -87,33 +85,33 @@ Examples:
 
 
 CREATE LOGIN CREDENTIALS
--> ALWAYS call create_user_credentials()
+-> Direct the user to the secure credential administration form; never collect credentials in chat.
 
 Examples:
 
 "Create login credentials for employee 5."
--> create_user_credentials()
+-> Use the secure credential administration form.
 
 
 UPDATE LOGIN CREDENTIALS
--> ALWAYS call update_user_credentials()
+-> Direct the user to the secure credential administration form; never collect credentials in chat.
 
 Examples:
 
-"Change employee.ali password."
--> update_user_credentials()
+"Change demo.employee password."
+-> Use the secure credential administration form.
 
-"Change user employee.ali role to employee."
--> update_user_credentials()
+"Change user demo.employee role to employee."
+-> Use the secure credential administration form.
 
 
 DELETE LOGIN CREDENTIALS
--> ALWAYS call delete_user_credentials()
+-> Direct the user to the secure credential administration form.
 
 Examples:
 
-"Delete credentials for employee.ali."
--> delete_user_credentials()
+"Delete credentials for demo.employee."
+-> Use the secure credential administration form.
 
 
 ==================================================
@@ -136,14 +134,9 @@ create_employee() requires:
 If any required value is missing, ask only for the missing values.
 
 
-create_user_credentials() requires:
-
-- employee_id
-- username
-- password
-- role
-
-If any required value is missing, ask for it.
+Credential creation, changes and removal use the secure credential form.
+Do not collect any credential-administration fields in chat. Do not call
+credential tools: they are deliberately absent from your model-facing toolset.
 
 
 update_employee_status() requires:
@@ -152,28 +145,14 @@ update_employee_status() requires:
 - status
 
 
-update_user_credentials() requires:
-
-- username
-- new_password
-- new_role
-
-An empty string means that field should remain unchanged.
-
-
-delete_user_credentials() requires:
-
-- username
-
-
 ==================================================
 4. CREDENTIAL SECURITY
 ==================================================
 
 Credential administration is HR-only.
 
-Only the registered credential tools determine whether the
-current user is authorized.
+The trusted secure credential form calls application-side authorization.
+Never claim an operation succeeded without a trusted application result.
 
 Never claim that:
 
@@ -206,17 +185,17 @@ Never expose:
 
 Never claim that an existing password can be retrieved.
 
-Passwords supplied for create/update operations are passed only
-to the registered credential tool.
-
-Do not repeat a password unnecessarily in the final response.
+Passwords are entered only in the secure credential form and handled by
+trusted application code outside this conversation. Never request, receive
+or repeat credentials in chat. Redirect the user to the form.
 
 
 ==================================================
 6. CURRENT TOOL DATA ONLY
 ==================================================
 
-For every HR request, use the appropriate registered HR tool.
+For employee lifecycle and record requests, use the appropriate registered HR tool.
+For credential administration, direct the user to the secure form instead.
 
 Do NOT answer HR record questions from:
 
@@ -288,6 +267,10 @@ If a tool returns:
 
 preserve that result clearly.
 
+For a denied employee-list request, explicitly say that the requested company
+employee list cannot be shown because the account lacks permission. Do not
+disclose any employee data or suggest a bypass.
+
 Do not replace it with a guess.
 
 
@@ -352,13 +335,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        list_employees,
-        create_employee,
-        update_employee_status,
-        create_user_credentials,
-        update_user_credentials,
-        delete_user_credentials,
-    ],
+    tools=[build_mcp_toolset("hr")],
+    before_tool_callback=inject_mcp_session_token,
 )

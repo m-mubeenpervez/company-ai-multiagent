@@ -10,10 +10,17 @@ def get_payroll(employee_id: int, pay_month: str, tool_context: ToolContext) -> 
     if user["role"] not in {"hr","finance"} and user["employee_id"] != employee_id:
         return {"status":"forbidden","message":"You can only view your own payroll."}
     conn = get_connection()
-    row = conn.execute(
-        "SELECT * FROM payroll WHERE employee_id=? AND pay_month=?",
-        (employee_id,pay_month),
-    ).fetchone()
+    pay_month = pay_month.strip()
+    if pay_month:
+        row = conn.execute(
+            "SELECT * FROM payroll WHERE employee_id=? AND pay_month=?",
+            (employee_id,pay_month),
+        ).fetchone()
+    else:
+        row = conn.execute(
+            "SELECT * FROM payroll WHERE employee_id=? ORDER BY pay_month DESC LIMIT 1",
+            (employee_id,),
+        ).fetchone()
     conn.close()
     if not row: return {"status":"not_found"}
     data = dict(row)

@@ -9,13 +9,17 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
 TOP_K = int(os.getenv("RAG_TOP_K", "5"))
 MIN_SCORE = float(os.getenv("RAG_MIN_SCORE", "0.45"))
+MAX_SCORE_DROP = float(os.getenv("RAG_MAX_SCORE_DROP", "0.12"))
 
 def search_policy(query: str) -> dict:
-    vector = embed_query(query)
-    client = get_client()
+    try:
+        client = get_client()
+    except FileNotFoundError:
+        return {"status":"not_ready","message":"Policy vector database has not been ingested yet."}
     try:
         if not client.collection_exists(COLLECTION):
             return {"status":"not_ready","message":"Policy vector database has not been ingested yet."}
+        vector = embed_query(query)
         response = client.query_points(
             collection_name=COLLECTION,
             query=vector,
@@ -27,7 +31,10 @@ def search_policy(query: str) -> dict:
         client.close()
 
     results = []
+    best_score = float(response.points[0].score) if response.points else None
     for point in response.points:
+        if best_score is not None and best_score - float(point.score) > MAX_SCORE_DROP:
+            continue
         payload = point.payload or {}
         results.append({
             "score": round(float(point.score),4),

@@ -44,10 +44,13 @@ def get_employee_profile(
                 e.joining_date,
                 e.status,
                 e.work_location,
-                e.manager_employee_id
+                e.manager_employee_id,
+                m.full_name AS manager_name
             FROM employees e
             JOIN departments d
                 ON d.id = e.department_id
+            LEFT JOIN employees m
+                ON m.id = e.manager_employee_id
             WHERE e.id = ?
             """,
             (employee_id,),

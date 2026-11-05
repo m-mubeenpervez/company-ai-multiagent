@@ -1,10 +1,10 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.finance_tools import (
-    get_expense_claims,
-    submit_expense,
-    review_expense,
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
 
 
@@ -12,6 +12,7 @@ finance_agent = Agent(
     name="finance_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Finance and expense specialist. Handles permission-aware "
@@ -55,6 +56,9 @@ Examples:
 
 "Show expense claims for employee 5."
 -> get_expense_claims(employee_id=5)
+
+"Show the expense claims I am responsible for reviewing."
+-> get_expense_claims(employee_id=0) for the Finance pending-review queue
 
 
 SUBMIT EXPENSE CLAIM
@@ -358,10 +362,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        get_expense_claims,
-        submit_expense,
-        review_expense,
-    ],
+    tools=[build_mcp_toolset("finance")],
+    before_tool_callback=inject_mcp_session_token,
 )

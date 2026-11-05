@@ -4,16 +4,16 @@
 
 | Level / role | Name | Username | Password | Employee ID | Typical access |
 |---|---|---|---|---:|---|
-| HR | Saqib Khan | `hr.admin` | `HrAdmin#2026` | 1 | Employee lifecycle + **credential create/update/delete** |
-| Manager | Asim Raza | `manager.asim` | `Manager#2026` | 2 | Direct reports, attendance, leave approval, projects |
-| Permanent Employee | Ali Hassan | `employee.ali` | `Employee#2026` | 3 | Own profile, leave, payroll, tasks, expenses |
-| Permanent Employee | Sara Ahmed | `employee.sara` | `Employee#2026` | 4 | Own profile, leave, payroll, tasks, expenses |
-| Intern | Mubeen Pervez | `intern.mubeen` | `Intern#2026` | 5 | Own intern profile, reports, training, leave, tasks |
-| Intern | Ahmad Javaid | `intern.ahmad` | `Intern#2026` | 6 | Own intern profile, reports, training, leave, tasks |
-| Recruiter | Noor Fatima | `recruiter.noor` | `Recruit#2026` | 7 | Candidate and interview pipeline |
-| Finance | Hina Malik | `finance.hina` | `Finance#2026` | 8 | Payroll and expense-finance access |
-| IT | Usman Tariq | `it.usman` | `ItSupport#2026` | 9 | IT asset operations |
-| System / Audit Admin | Adeel Shah | `admin.auditor` | `Audit#2026` | 10 | Audit logs + permitted operational views |
+| HR | Rowan Cedar | `demo.hr` | `DemoHr#2026` | 1 | Employee lifecycle + **credential create/update/delete** |
+| Manager | Arden Vale | `demo.manager` | `DemoManager#2026` | 2 | Direct reports, attendance, leave approval, projects |
+| Permanent Employee | Jules Ember | `demo.employee` | `DemoEmployee#2026` | 3 | Own profile, leave, payroll, tasks, expenses |
+| Permanent Employee | Casey Harbor | `demo.employee2` | `DemoEmployee#2026` | 4 | Own profile, leave, payroll, tasks, expenses |
+| Intern | Riley Quartz | `demo.intern` | `DemoIntern#2026` | 5 | Own intern profile, reports, training, leave, tasks |
+| Intern | Morgan Pine | `demo.intern2` | `DemoIntern#2026` | 6 | Own intern profile, reports, training, leave, tasks |
+| Recruiter | Taylor Nimbus | `demo.recruiter` | `DemoRecruit#2026` | 7 | Candidate and interview pipeline |
+| Finance | Jordan Maple | `demo.finance` | `DemoFinance#2026` | 8 | Payroll and expense-finance access |
+| IT | Quinn Solace | `demo.it` | `DemoSupport#2026` | 9 | IT asset operations |
+| System / Audit Admin | Avery Lantern | `demo.admin` | `DemoAudit#2026` | 10 | Audit logs + permitted operational views |
 
 ## Credential Administration Rule
 
@@ -32,8 +32,8 @@ The `admin` role does **not** receive credential CRUD permission in this demo be
 
 ## Login Examples in ADK Web
 
-- `Log in with username hr.admin and password HrAdmin#2026`
-- `Log in with username intern.mubeen and password Intern#2026`
+- `Log in with username demo.hr and password DemoHr#2026`
+- `Log in with username demo.intern and password DemoIntern#2026`
 - `Who am I?`
 
 After login, identity and role values are stored in ADK session state for that conversation.

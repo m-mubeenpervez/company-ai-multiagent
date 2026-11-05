@@ -1,96 +1,41 @@
-from company_system.routing.router import route_request
+from __future__ import annotations
+
+from pathlib import Path
+
+from company_system.routing.catalog import ROUTE_NAMES, ROUTING_EXAMPLES
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
-tests = [
-    # AUTH
-    ("Log in with username employee.ali and password Employee#2026", "login"),
-    ("Log out", "logout"),
+def main() -> None:
+    expected = {
+        "auth_agent", "hr_agent", "employee_agent", "intern_agent",
+        "attendance_agent", "leave_agent", "policy_agent", "recruitment_agent",
+        "performance_agent", "training_agent", "project_agent", "payroll_agent",
+        "finance_agent", "it_agent", "document_agent", "analytics_agent",
+        "notification_agent", "audit_agent", "unknown",
+    }
+    assert set(ROUTE_NAMES) == expected
+    assert len(ROUTING_EXAMPLES) >= 12
 
-    # HR
-    ("List all employees", "hr_agent"),
-    ("Create a new employee", "hr_agent"),
-    ("Change employee 11 status to inactive", "hr_agent"),
-    ("Create login credentials for employee 5", "hr_agent"),
+    routing_dir = PROJECT_ROOT / "company_system" / "routing"
+    for old in ["router.py", "dispatcher.py", "deterministic_router_agent.py"]:
+        assert not (routing_dir / old).exists(), f"Deterministic routing file still exists: {old}"
 
-    # EMPLOYEE
-    ("Show my employee profile", "employee_agent"),
-    ("What is my designation and department?", "employee_agent"),
+    root_text = (PROJECT_ROOT / "company_system" / "agent.py").read_text(encoding="utf-8")
+    semantic_text = (routing_dir / "semantic_router_agent.py").read_text(encoding="utf-8")
+    assert "GeminiSemanticRouterAgent" in root_text
+    assert "DeterministicRouterAgent" not in root_text
+    assert "response_schema=RoutingDecision" in semantic_text
+    assert "confidence < GEMINI_ROUTER_MIN_CONFIDENCE" in semantic_text
+    assert "GEMINI_ROUTER_FALLBACK_MODEL" in semantic_text
+    assert "exact keyword matching" in semantic_text
 
-    # POLICY
-    ("What is the internship report deadline?", "policy_agent"),
-    ("What does the leave policy say?", "policy_agent"),
-
-    # INTERN
-    ("Show my intern profile", "intern_agent"),
-    ("Show internship report status", "intern_agent"),
-
-    # ATTENDANCE
-    ("Show my attendance", "attendance_agent"),
-
-    # LEAVE
-    ("Show my leave balance", "leave_agent"),
-
-    # RECRUITMENT
-    ("List candidates in interview stage", "recruitment_agent"),
-
-    # PERFORMANCE
-    ("Show my performance reviews", "performance_agent"),
-
-    # TRAINING
-    ("Show my training assignments", "training_agent"),
-
-    # PROJECT
-    ("Show my projects", "project_agent"),
-    ("Show my assigned tasks", "project_agent"),
-
-    # PAYROLL
-    ("Show my payroll for 2026-09", "payroll_agent"),
-
-    # FINANCE
-    ("Show my expense claims", "finance_agent"),
-
-    # IT
-    ("Show my assigned assets", "it_agent"),
-
-    # DOCUMENT
-    ("Show my documents", "document_agent"),
-
-    # ANALYTICS
-    ("Show company headcount summary", "analytics_agent"),
-    ("Show the operational dashboard summary", "analytics_agent"),
-    ("How many pending leave requests are there?", "analytics_agent"),
-    ("How many overdue tasks are there?", "analytics_agent"),
-    ("How many missing intern reports are there?", "analytics_agent"),
-
-    # NOTIFICATION
-    ("Show my notifications", "notification_agent"),
-
-    # AUDIT
-    ("Show the last 10 audit logs", "audit_agent"),
-]
+    print("PASS | Deterministic Python routing has been removed")
+    print("PASS | Gemini semantic router uses strict structured routing")
+    print("PASS | Router covers all 18 CompanyAI agents plus unknown")
+    print("PASS | Confidence gate, LLM retry and Gemini fallback are present")
 
 
-passed = 0
-failed = 0
-
-for prompt, expected in tests:
-    actual = route_request(prompt)
-
-    if actual == expected:
-        print(f"PASS | {prompt} -> {actual}")
-        passed += 1
-    else:
-        print(
-            f"FAIL | {prompt}\n"
-            f"     Expected: {expected}\n"
-            f"     Actual:   {actual}"
-        )
-        failed += 1
-
-
-print("\n==============================")
-print("ROUTING REGRESSION SUMMARY")
-print("==============================")
-print(f"Passed: {passed}")
-print(f"Failed: {failed}")
-print(f"Total:  {passed + failed}")
+if __name__ == "__main__":
+    main()

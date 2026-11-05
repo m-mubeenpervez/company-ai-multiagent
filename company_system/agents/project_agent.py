@@ -1,9 +1,10 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.project_tools import (
-    get_employee_projects,
-    get_employee_tasks,
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
 
 
@@ -11,6 +12,7 @@ project_agent = Agent(
     name="project_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Project and task specialist. Handles permission-aware "
@@ -257,9 +259,6 @@ Do not add generic filler such as:
 - "Let me know if you need anything else."
 - "How else can I assist you?"
 """,
-
-    tools=[
-        get_employee_projects,
-        get_employee_tasks,
-    ],
+    tools=[build_mcp_toolset("project")],
+    before_tool_callback=inject_mcp_session_token,
 )

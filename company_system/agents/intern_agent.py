@@ -1,10 +1,10 @@
 from google.adk.agents import Agent
 
-from company_system.config import build_llm
-from company_system.tools.intern_tools import (
-    get_intern_profile,
-    get_intern_report_status,
-    list_missing_intern_reports,
+from company_system.config import build_agent_generation_config, build_llm
+
+from company_system.mcp.client import (
+    build_mcp_toolset,
+    inject_mcp_session_token,
 )
 
 
@@ -12,6 +12,7 @@ intern_agent = Agent(
     name="intern_agent",
 
     model=build_llm(),
+    generate_content_config=build_agent_generation_config(),
 
     description=(
         "Intern management specialist. Handles intern profiles, "
@@ -54,6 +55,9 @@ MONTHLY INTERNSHIP REPORT
 Example:
 "Show my internship report status for 2026-09."
 -> get_intern_report_status()
+
+"Show my monthly internship report status."
+-> get_intern_report_status(report_month="") to request the latest available report
 
 
 MISSING INTERN REPORTS
@@ -202,10 +206,6 @@ Do not add:
 - Let me know if you need anything else.
 - How else can I assist you?
 """,
-
-    tools=[
-        get_intern_profile,
-        get_intern_report_status,
-        list_missing_intern_reports,
-    ],
+    tools=[build_mcp_toolset("intern")],
+    before_tool_callback=inject_mcp_session_token,
 )
