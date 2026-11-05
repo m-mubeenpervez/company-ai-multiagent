@@ -113,7 +113,7 @@ def seed_synthetic(connection: sqlite3.Connection) -> None:
         """INSERT INTO document_records(
                employee_id,document_type,title,file_path,visibility,created_at
            ) VALUES (NULL,'company_policy','Company Handbook',
-                     'company_system/documents/company_handbook.pdf','company',?)""",
+                     'synthetic_documents/demo_handbook.pdf','company',?)""",
         (now,),
     )
     connection.commit()
